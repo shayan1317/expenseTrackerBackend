@@ -1,0 +1,27 @@
+# Node modules
+node_modules/
+
+# Logs
+
+
+
+# Environment variables
+.env
+
+
+# Build output
+
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+
+prisma/migrations/
+
+# Optional npm cache
+.npm/
+
+# Coverage (e.g. from Jest)
+
