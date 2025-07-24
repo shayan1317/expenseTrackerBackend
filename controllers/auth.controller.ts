@@ -59,37 +59,51 @@ export const signupUser = async (req, res) => {
   }
 };
 
-export const Login = async (
-  req: Request<{}, {}, { email: string; password: string }>,
-  res: Response
-) => {
-  console.log("ENV", process.env.JWT_SECRET_KEY);
+export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    let validationResult = signinSchema.safeParse({ email, password, name });
+    console.log("req.body", req.body);
+
+    let validationResult = signinSchema.safeParse({ email, password });
     if (!validationResult.success) {
       return res.status(400).json({
         message: "Validation failed",
         errors: validationResult.error.flatten().fieldErrors,
       });
     }
-    let userExist = await prisma.user.findUnique({ where: { email: email } });
 
+    let userExist = await prisma.user.findUnique({ where: { email } });
+    console.log("userExist", userExist);
     if (!userExist) {
+      console.log("here");
       return res.status(400).json({
         message: "User does not exist",
       });
     }
+    const JWT_SECRET_KEY = process.env.JWT_SECRET;
+    if (!JWT_SECRET_KEY) {
+      throw new Error("JWT_SECRET_KEY is not defined in .env");
+    }
 
-    //create password
+    const token = jwt.sign({ userId: userExist?.id }, JWT_SECRET_KEY, {
+      expiresIn: "7d",
+    });
 
+    console.log("print");
     res.status(200).json({
       message: "User LoggedIn successfully",
       user: {
-        ...userExist,
+        id: userExist?.id,
+        email: userExist?.email,
+        name: userExist?.full_name,
+        token: token,
       },
     });
-  } catch (Err) {
-    console.log(Err);
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({
+      message: "Internal Server Error",
+      error: err.message,
+    });
   }
 };
