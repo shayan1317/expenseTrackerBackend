@@ -1,14 +1,28 @@
-import { Request, Response } from "express";
-import prisma from "../lib/PrismaClient";
-import { SignupRequestBody } from "../lib/types";
+import {
+  AuthenticationErrorMessage,
+  AuthenticationReturn,
+} from "./../types/output";
+import { LoginIValues, SignUpIValues } from "./../types/Input";
 import bcrypt from "bcryptjs";
-import { signinSchema, signupSchema } from "../lib/helperFunc";
 import jwt from "jsonwebtoken";
-export const signupUser = async (req, res) => {
-  try {
-    const { email, password, name } = req.body;
 
-    let validationResult = signupSchema.safeParse({ email, password, name });
+import prisma from "../lib/PrismaClient";
+import { signinSchema, signupSchema } from "../lib/schema";
+import { User } from "../types/output";
+import { Response, Request } from "express";
+export const SignupUser = async (
+  req: Request,
+  res: Response<AuthenticationReturn | AuthenticationErrorMessage>
+) => {
+  try {
+    const { email, password, name, image } = req.body as SignUpIValues;
+
+    let validationResult = signupSchema.safeParse({
+      email,
+      password,
+      name,
+      image,
+    });
     if (!validationResult.success) {
       return res.status(400).json({
         message: "Validation failed",
@@ -25,32 +39,33 @@ export const signupUser = async (req, res) => {
 
     //create password
 
-    const hashedPassword = await bcrypt.hash(password, 8);
-
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const emailNormalized = email.trim().toLowerCase();
     let user = await prisma.user.create({
       data: {
-        email: email,
+        email: emailNormalized,
         password_hash: hashedPassword,
         full_name: name,
+        image: image,
       },
     });
 
-    const JWT_SECRET_KEY = process.env.JWT_SECRET;
-    if (!JWT_SECRET_KEY) {
-      throw new Error("JWT_SECRET_KEY is not defined in .env");
+    const JWT_SECRET = process.env.JWT_SECRET;
+    if (!JWT_SECRET) {
+      throw new Error("JWT_SECRET is not defined in .env");
     }
 
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET_KEY, {
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
       expiresIn: "7d",
     });
-
-    res.status(200).json({
+    res.status(201).json({
       message: "User created successfully",
       user: {
         id: user.id,
-        email: user.email,
-        name: user.full_name,
+        email: emailNormalized,
+        full_name: user.full_name,
         token: token,
+        image: user.image,
       },
     });
   } catch (err) {
@@ -59,10 +74,12 @@ export const signupUser = async (req, res) => {
   }
 };
 
-export const Login = async (req, res) => {
+export const LoginUser = async (
+  req: Request,
+  res: Response<AuthenticationReturn | AuthenticationErrorMessage>
+) => {
   try {
-    const { email, password } = req.body;
-    console.log("req.body", req.body);
+    const { email, password } = req.body as LoginIValues;
 
     let validationResult = signinSchema.safeParse({ email, password });
     if (!validationResult.success) {
@@ -73,12 +90,20 @@ export const Login = async (req, res) => {
     }
 
     let userExist = await prisma.user.findUnique({ where: { email } });
-    console.log("userExist", userExist);
+
     if (!userExist) {
-      console.log("here");
       return res.status(400).json({
         message: "User does not exist",
       });
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      password, // the password the user typed
+      userExist?.password_hash // the hashed password from your query
+    );
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Incorrect Password" });
     }
     const JWT_SECRET_KEY = process.env.JWT_SECRET;
     if (!JWT_SECRET_KEY) {
@@ -89,7 +114,6 @@ export const Login = async (req, res) => {
       expiresIn: "7d",
     });
 
-    console.log("print");
     res.status(200).json({
       message: "User LoggedIn successfully",
       user: {
@@ -97,13 +121,14 @@ export const Login = async (req, res) => {
         email: userExist?.email,
         name: userExist?.full_name,
         token: token,
+        image: userExist?.image,
       },
     });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({
       message: "Internal Server Error",
-      error: err.message,
+      errors: err.message,
     });
   }
 };

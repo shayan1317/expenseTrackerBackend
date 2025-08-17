@@ -1,9 +1,11 @@
 import express from "express";
-import { Login, signupUser } from "../controllers/auth.controller.ts";
+
 import { upload } from "../middlewares/upload.ts";
+import { LoginUser, SignupUser } from "../controllers/authController.ts";
+import { UploadFile } from "../controllers/uploadFileController.ts";
 
 const router = express.Router();
 
-router.post("/signup", upload.single("image"), signupUser);
-router.post("/login", Login);
+router.post("/signup", SignupUser);
+router.post("/login", LoginUser);
 export default router;
