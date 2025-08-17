@@ -2,12 +2,12 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import transactionRoutes from "../routes/transactionRoutes.ts";
-import expenseRoutes from "../routes/expenseRoutes.ts";
-import { UploadFile } from "../controllers/uploadFileController.ts";
-import { upload } from "../middlewares/upload.ts";
-import authRoutes from "../routes/auth.ts";
-import updateRoutes from "../routes/updateRoutes.ts";
+import transactionRoutes from "../routes/transactionRoutes";
+import expenseRoutes from "../routes/expenseRoutes";
+import { UploadFile } from "../controllers/uploadFileController";
+import { upload } from "../middlewares/upload";
+import authRoutes from "../routes/auth";
+import updateRoutes from "../routes/updateRoutes";
 dotenv.config();
 const app = express();
 //alllow local host
