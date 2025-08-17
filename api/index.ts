@@ -1,12 +1,13 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { upload } from "./middlewares/upload";
-import { UploadFile } from "./controllers/uploadFileController";
-import expenseRoutes from "./routes/expenseRoutes";
-import updateRoutes from "./routes/updateRoutes";
-import transactionRoutes from "./routes/transactionRoutes";
-import authRoutes from "./routes/auth";
+
+import transactionRoutes from "../routes/transactionRoutes.ts";
+import expenseRoutes from "../routes/expenseRoutes.ts";
+import { UploadFile } from "../controllers/uploadFileController.ts";
+import { upload } from "../middlewares/upload.ts";
+import authRoutes from "../routes/auth.ts";
+import updateRoutes from "../routes/updateRoutes.ts";
 dotenv.config();
 const app = express();
 //alllow local host
@@ -32,6 +33,8 @@ app.use("/api/income", transactionRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/user", updateRoutes);
 // app.use("/api/users", userRoutes);
+
+export default app;
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is live at http://localhost:${PORT}`);

@@ -6,8 +6,12 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon --watch . --ext ts --exec tsx server.ts",
-    "start": "node server.js",
-    "prisma": "prisma"
+    "start": "tsx server.ts",
+    "start:prod": "node server.js",
+    "build": "tsc",
+    "vercel-build": "tsc",
+    "prisma": "prisma",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
@@ -33,5 +37,8 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
     "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
