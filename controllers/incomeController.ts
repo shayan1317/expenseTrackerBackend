@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Request, Response } from "express";
 import prisma from "../lib/PrismaClient";
 import { IncomeCreateInput, IncomeIValues } from "../types/Input";

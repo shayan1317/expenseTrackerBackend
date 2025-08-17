@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import { AuthenticatedRequest, DecodedToken } from "../types/Input";

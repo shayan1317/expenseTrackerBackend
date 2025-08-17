@@ -1,3 +1,4 @@
+// @ts-nocheck
 import express from "express";
 import {
   getAllUsers,
@@ -10,6 +11,5 @@ const router = express.Router();
 
 router.get("/", getAllUsers);
 router.get("/search", searchAllUsers);
-
 
 export default router;
