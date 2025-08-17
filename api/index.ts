@@ -47,7 +47,3 @@ app.use("/api/user", updateRoutes);
 // app.use("/api/users", userRoutes);
 
 export default app;
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is live at http://localhost:${PORT}`);
-});
