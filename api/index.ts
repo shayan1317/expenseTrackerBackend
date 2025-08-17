@@ -14,7 +14,7 @@ const app = express();
 //alllow local host
 
 // api/index.ts mein CORS section ko replace karein:
-
+app.options("*", cors());
 app.use(
   cors({
     origin: ["http://localhost:5173/", "http://127.0.0.1:5173/"],
