@@ -10,11 +10,28 @@ import authRoutes from "./routes/auth";
 dotenv.config();
 const app = express();
 //alllow local host
+
+// api/index.ts mein CORS section ko replace karein:
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow requests from this specific origin
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Specify allowed methods
-    credentials: true, // Optional: if you need to send cookies or auth headers
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://expense-tracker-backend-snowy-rho.vercel.app",
+      "https://*.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "Authorization",
+      "Cache-Control",
+    ],
+    credentials: true,
+    optionsSuccessStatus: 200,
   })
 );
 
