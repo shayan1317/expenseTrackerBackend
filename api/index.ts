@@ -50,5 +50,6 @@ app.use("/api/income", transactionRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/user", updateRoutes);
 // app.use("/api/users", userRoutes);
+app.listen(3000, () => console.log("Server ready on port 3000."));
 
-export default app;
+module.exports = app;
