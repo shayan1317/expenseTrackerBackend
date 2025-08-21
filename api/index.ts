@@ -20,7 +20,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://127.0.0.1:5173",
-      "https://expense-tracker-frontend.vercel.app", // frontend URL only
+      "https://expense-tracker-snowy-ten.vercel.app", // frontend URL only
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: [
