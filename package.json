@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "server.js",
+  "main": "api/index.ts",
   "scripts": {
-    "dev": "nodemon --watch . --ext ts --exec tsx server.ts",
-    "start": "tsx server.ts",
-    "start:prod": "node server.js",
+    "dev": "nodemon --watch . --ext ts --exec tsx api/index.ts",
     "build": "tsc",
     "vercel-build": "tsc --noEmitOnError false",
     "prisma": "prisma",

@@ -3,24 +3,24 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import transactionRoutes from "../routes/transactionRoutes";
-import expenseRoutes from "../routes/expenseRoutes";
-import { UploadFile } from "../controllers/uploadFileController";
-import { upload } from "../middlewares/upload";
-import authRoutes from "../routes/auth";
-import updateRoutes from "../routes/updateRoutes";
-dotenv.config();
-const app = express();
-//alllow local host
+import transactionRoutes from "../routes/transactionRoutes.js";
+import expenseRoutes from "../routes/expenseRoutes.js";
+import { UploadFile } from "../controllers/uploadFileController.js";
+import { upload } from "../middlewares/upload.js";
+import authRoutes from "../routes/auth.js";
+import updateRoutes from "../routes/updateRoutes.js";
 
-// api/index.ts mein CORS section ko replace karein:
-app.options("*", cors());
+dotenv.config();
+
+const app = express();
+
+// CORS
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "http://127.0.0.1:5173",
-      "https://expense-tracker-backend-snowy-rho.vercel.app/api",
+      "https://expense-tracker-frontend.vercel.app", // frontend URL only
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: [
@@ -39,17 +39,16 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
-app.post("/api/upload", upload.single("file"), UploadFile);
-
-// Root route
-app.use("/api/auth", authRoutes);
 
 // Routes
-
+app.post("/api/upload", upload.single("file"), UploadFile);
+app.use("/api/auth", authRoutes);
 app.use("/api/income", transactionRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/user", updateRoutes);
-// app.use("/api/users", userRoutes);
-app.listen(3000, () => console.log("Server ready on port 3000."));
 
-module.exports = app;
+// ❌ REMOVE app.listen
+// app.listen(3000, () => console.log("Listening..."));
+
+// ✅ Export handler for Vercel
+export default app;
