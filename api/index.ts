@@ -21,7 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 app.use("/uploads", express.static("uploads"));
-
+app.get("/", (_req: Request, res: Response) => {
+  return res.send("Express Typescript on Vercel");
+});
 // Routes
 app.post("/api/upload", upload.single("file"), UploadFile);
 app.use("/api/auth", authRoutes);
