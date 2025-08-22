@@ -2,7 +2,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import serverless from "serverless-http";
 
 import transactionRoutes from "../routes/transactionRoutes.js";
 import expenseRoutes from "../routes/expenseRoutes.js";
@@ -14,35 +13,35 @@ import updateRoutes from "../routes/updateRoutes.js";
 dotenv.config();
 
 const app = express();
-
-// CORS configuration
 app.use(
   cors({
-    origin: "https://expense-tracker-snowy-ten.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    origin: "https://expense-tracker-snowy-ten.vercel.app", // Your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+    credentials: true, // If your app uses cookies or auth headers
   })
 );
+// CORS
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files (use /tmp for Vercel)
-// app.use("/uploads", express.static("/uploads"));
-
-// Routes
-app.get("/", (_req, res) => {
+app.use("/uploads", express.static("uploads"));
+app.get("/", (_req: Request, res: Response) => {
   return res.send("Express Typescript on Vercel");
 });
+// Routes
 app.post("/api/upload", upload.single("file"), UploadFile);
 app.use("/api/auth", authRoutes);
 app.use("/api/income", transactionRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/user", updateRoutes);
 
-// Export as serverless function
-export const handler = serverless(app);
+// ❌ REMOVE app.listen
+// app.listen(3000, () => console.log("Listening..."));
+
+// ✅ Export handler for Vercel
+export default app;
 // import express, { Request, Response } from "express";
 // import serverless from "serverless-http";
 // import cors from "cors";
