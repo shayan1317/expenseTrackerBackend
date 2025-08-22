@@ -9,7 +9,7 @@ import { UploadFile } from "../controllers/uploadFileController.js";
 import { upload } from "../middlewares/upload.js";
 import authRoutes from "../routes/auth.js";
 import updateRoutes from "../routes/updateRoutes.js";
-
+import serverless from "serverless-http";
 dotenv.config();
 
 const app = express();
@@ -25,7 +25,7 @@ app.get("/", (_req: Request, res: Response) => {
 });
 // Routes
 
-app.post("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("<p>some html</p>");
 });
 app.post("/api/upload", upload.single("file"), UploadFile);
@@ -36,11 +36,11 @@ app.use("/api/user", updateRoutes);
 
 // ❌ REMOVE app.listen
 // app.listen(3000, () => console.log("Listening..."));
-app.listen(PORT, () =>
-  console.log(`server running in http://localhost:${PORT}`)
-);
+// app.listen(PORT, () =>
+//   console.log(`server running in http://localhost:${PORT}`)
+// );
 // ✅ Export handler for Vercel
-export default app;
+export default serverless(app);
 // import express, { Request, Response } from "express";
 // import serverless from "serverless-http";
 // import cors from "cors";
