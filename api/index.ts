@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 
 // Routes
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err, req, res, next) => {
   console.error("Global error handler:", err);
   res.status(500).json({
     error: "Internal Server Error",
@@ -34,7 +34,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 // Health check route
-app.get("/", (_req: Request, res: Response) => {
+app.get("/", (_req, res) => {
   return res.json({
     message: "Express TypeScript API on Vercel",
     status: "OK",
