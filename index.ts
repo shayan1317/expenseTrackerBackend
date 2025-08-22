@@ -3,12 +3,12 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-// import transactionRoutes from "../routes/transactionRoutes.js";
-// import expenseRoutes from "../routes/expenseRoutes.js";
-// import { UploadFile } from "../controllers/uploadFileController.js";
-// import { upload } from "../middlewares/upload.js";
-// import authRoutes from "../routes/auth.js";
-// import updateRoutes from "../routes/updateRoutes.js";
+import transactionRoutes from "../routes/transactionRoutes.js";
+import expenseRoutes from "../routes/expenseRoutes.js";
+import { UploadFile } from "../controllers/uploadFileController.js";
+import { upload } from "../middlewares/upload.js";
+import authRoutes from "../routes/auth.js";
+import updateRoutes from "../routes/updateRoutes.js";
 import serverless from "serverless-http";
 dotenv.config();
 
@@ -35,7 +35,7 @@ app.use((err, req, res, next) => {
 
 // Health check route
 app.get("/", (_req, res) => {
-  return res.json({
+  return res.send({
     message: "Express TypeScript API on Vercel",
     status: "OK",
     timestamp: new Date().toISOString(),
@@ -43,10 +43,10 @@ app.get("/", (_req, res) => {
   });
 });
 
-// app.post("/api/upload", upload.single("file"), UploadFile);
-// app.use("/api/auth", authRoutes);
-// app.use("/api/income", transactionRoutes);
-// app.use("/api/expense", expenseRoutes);
-// app.use("/api/user", updateRoutes);
+app.post("/api/upload", upload.single("file"), UploadFile);
+app.use("/api/auth", authRoutes);
+app.use("/api/income", transactionRoutes);
+app.use("/api/expense", expenseRoutes);
+app.use("/api/user", updateRoutes);
 
 export default serverless(app);
