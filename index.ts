@@ -3,12 +3,12 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import transactionRoutes from "./routes/transactionRoutes";
-import expenseRoutes from "./routes/expenseRoutes";
-import { UploadFile } from "./controllers/uploadFileController";
-import { upload } from "./middlewares/upload";
-import authRoutes from "./routes/auth";
-import updateRoutes from "./routes/updateRoutes";
+import transactionRoutes from "./routes/transactionRoutes.js";
+import expenseRoutes from "./routes/expenseRoutes.js";
+import { UploadFile } from "./controllers/uploadFileController.js";
+import { upload } from "./middlewares/upload.js";
+import authRoutes from "./routes/auth.js";
+import updateRoutes from "./routes/updateRoutes.js";
 import serverless from "serverless-http";
 dotenv.config();
 
