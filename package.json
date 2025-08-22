@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "api/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon --watch . --ext ts --exec tsx api/index.ts",
-    "build": "tsc",
+    "dev": "nodemon --watch . --ext ts --exec tsx index.ts",
+    "build": "dist/index.js",
     "vercel-build": "tsc --noEmitOnError false",
     "prisma": "prisma",
     "postinstall": "prisma generate"
