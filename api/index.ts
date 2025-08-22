@@ -13,7 +13,7 @@ import updateRoutes from "../routes/updateRoutes.js";
 dotenv.config();
 
 const app = express();
-server.use(cors());
+app.use(cors());
 // CORS
 
 app.use(express.json());
