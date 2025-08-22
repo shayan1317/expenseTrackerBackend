@@ -22,10 +22,27 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 
 // Routes
-
-app.get("/", (_req, res) => {
-  return res.send("Express Typescript on Vercel");
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error("Global error handler:", err);
+  res.status(500).json({
+    error: "Internal Server Error",
+    message:
+      process.env.NODE_ENV === "development"
+        ? err.message
+        : "Something went wrong",
+  });
 });
+
+// Health check route
+app.get("/", (_req: Request, res: Response) => {
+  return res.json({
+    message: "Express TypeScript API on Vercel",
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    nodeVersion: process.version,
+  });
+});
+
 app.post("/api/upload", upload.single("file"), UploadFile);
 app.use("/api/auth", authRoutes);
 app.use("/api/income", transactionRoutes);
