@@ -20,13 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
-app.get("/", (_req: Request, res: Response) => {
-  return res.send("Express Typescript on Vercel");
-});
+
 // Routes
 
-app.get("/", (req, res) => {
-  res.send("<p>some html</p>");
+app.get("/", (_req, res) => {
+  return res.send("Express Typescript on Vercel");
 });
 app.post("/api/upload", upload.single("file"), UploadFile);
 app.use("/api/auth", authRoutes);

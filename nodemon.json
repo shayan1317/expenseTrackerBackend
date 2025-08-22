@@ -3,5 +3,5 @@
         "."
     ],
     "ext": "ts",
-    "exec": "tsx server.ts"
+    "exec": "tsx api/index.ts"
 }
