@@ -43,34 +43,10 @@ app.get("/", (_req, res) => {
   });
 });
 
-app.post("/api/upload", upload.single("file"), UploadFile);
-app.use("/api/auth", authRoutes);
-app.use("/api/income", transactionRoutes);
-app.use("/api/expense", expenseRoutes);
-app.use("/api/user", updateRoutes);
+// app.post("/api/upload", upload.single("file"), UploadFile);
+// app.use("/api/auth", authRoutes);
+// app.use("/api/income", transactionRoutes);
+// app.use("/api/expense", expenseRoutes);
+// app.use("/api/user", updateRoutes);
 
-// ❌ REMOVE app.listen
-// app.listen(3000, () => console.log("Listening..."));
-// app.listen(PORT, () =>
-//   console.log(`server running in http://localhost:${PORT}`)
-// );
-// ✅ Export handler for Vercel
 export default serverless(app);
-// import express, { Request, Response } from "express";
-// import serverless from "serverless-http";
-// import cors from "cors";
-// const app = express();
-// app.use(cors());
-// app.use(express.json());
-
-// app.get("/", (req: Request, res: Response) => {
-//   res.send("Hello from Express TypeScript on Vercel!");
-// });
-
-// // Add more routes as needed
-// app.get("/api/hello", (req: Request, res: Response) => {
-//   res.json({ message: "Hello from the API!" });
-// });
-
-// // Export the Express app as a serverless function
-// module.exports = serverless(app);
