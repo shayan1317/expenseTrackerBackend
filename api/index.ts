@@ -13,14 +13,7 @@ import updateRoutes from "../routes/updateRoutes.js";
 dotenv.config();
 
 const app = express();
-app.use(
-  cors({
-    origin: "https://expense-tracker-snowy-ten.vercel.app", // Your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
-    credentials: true, // If your app uses cookies or auth headers
-  })
-);
+server.use(cors());
 // CORS
 
 app.use(express.json());
@@ -39,7 +32,9 @@ app.use("/api/user", updateRoutes);
 
 // ❌ REMOVE app.listen
 // app.listen(3000, () => console.log("Listening..."));
-
+app.listen(PORT, () =>
+  console.log(`server running in http://localhost:${PORT}`)
+);
 // ✅ Export handler for Vercel
 export default app;
 // import express, { Request, Response } from "express";

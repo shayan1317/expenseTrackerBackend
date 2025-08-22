@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "api/index.ts",
+  "main": "api/index.js",
   "scripts": {
     "dev": "nodemon --watch . --ext ts --exec tsx api/index.ts",
     "build": "tsc",
