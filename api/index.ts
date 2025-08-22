@@ -24,6 +24,10 @@ app.get("/", (_req: Request, res: Response) => {
   return res.send("Express Typescript on Vercel");
 });
 // Routes
+
+app.post("/", (req, res) => {
+  res.send("<p>some html</p>");
+});
 app.post("/api/upload", upload.single("file"), UploadFile);
 app.use("/api/auth", authRoutes);
 app.use("/api/income", transactionRoutes);
