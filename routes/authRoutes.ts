@@ -1,9 +1,9 @@
 // @ts-nocheck
 import express from "express";
 
-import { upload } from "../middlewares/upload.ts";
-import { LoginUser, SignupUser } from "../controllers/authController.ts";
-import { UploadFile } from "../controllers/uploadFileController.ts";
+import { upload } from "../middlewares/upload";
+import { LoginUser, SignupUser } from "../controllers/authController";
+import { UploadFile } from "../controllers/uploadFileController";
 
 const router = express.Router();
 

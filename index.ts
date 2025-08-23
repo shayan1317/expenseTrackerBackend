@@ -43,5 +43,5 @@ app.use("/api/auth", authRoutes);
 app.use("/api/income", transactionRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/user", updateRoutes);
-app.listen(3000, () => console.log("listening to 3000"));
+
 export default app;
