@@ -13,7 +13,7 @@ import updateRoutes from "./routes/updateRoutes";
 // dotenv.config();
 
 const app = express();
-// app.use(cors());
+app.use(cors());
 // // CORS
 
 app.use(express.json());
@@ -43,5 +43,5 @@ app.use("/api/auth", authRoutes);
 app.use("/api/income", transactionRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/user", updateRoutes);
-app.listen(3000, () => console.log("listening to 3000"));
+// app.listen(3000, () => console.log("listening to 3000"));
 export default app;
