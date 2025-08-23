@@ -25,3 +25,4 @@ prisma/migrations/
 
 # Coverage (e.g. from Jest)
 
+.vercel
