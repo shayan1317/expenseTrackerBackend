@@ -1,15 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext", // ya CommonJS, jo tum use karna chahte ho
-    "moduleResolution": "node", // ✅ important
-    "outDir": "dist",
+    "outDir": "./dist",
     "rootDir": ".",
-    "strict": true,
+    "module": "commonjs",
+    "target": "es6",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "allowImportingTsExtensions": false // default
+    "strict": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]
